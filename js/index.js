@@ -33,7 +33,6 @@ const navFocus = document.querySelectorAll('.nav-link').forEach(item => {
         item.style.color = 'white';
         item.style.transform = 'scale(1.4)';
         item.style.transition = 'transform 1.5s'
-        event.preventDefault();
     })
 
 // #5
@@ -69,17 +68,42 @@ const hoverButtons = document.querySelectorAll('.btn').forEach(item => {
 // hoverButtons.yoyo(true);
 
 // #9
-const textContent = document.querySelector('.text-content');
-textContent.addEventListener('select', () => {
-    textContent.style.backgroundColor = 'yellow';
-    event.stopPropagation();
+const textContent = document.querySelector('.text-content p');
+textContent.addEventListener('select', (event) => {
+    event.style.backgroundColor = 'yellow';
 })
+console.log(textContent);
 
-// #10
+// #10 & GSAP
 const footerFun = document.querySelector('footer p');
 footerFun.addEventListener('contextmenu', () => {
     gsap.to(footerFun, {rotation: 360, y: -200, x: -550, duration: 2});
 }) 
 
+//prevent default
+const stopLink = document.querySelector('.nav-link');
+stopLink.addEventListener('click', (event) => {
+    event.preventDefault();
+})
 
+//stop propagation
+const contentSection = document.querySelector(".content-section");
+contentSection.addEventListener('click', () => {
+  contentSection.style.backgroundColor= "green";
+  event.stopPropagation();
+})
 
+//GSAP
+gsap.registerEffect({
+    name: "explode",
+    effect: (targets, config) => {
+        return gsap.to(targets, {duration: config.duration, opacity: 0});
+    },
+    defaults: {duration: 2}, //defaults get applied to any "config" object passed to the effect
+    extendTimeline: true, //now you can call the effect directly on any GSAP timeline to have the result immediately inserted in the position you define (default is sequenced at the end)
+});
+
+const contentDest = document.querySelector('.content-destination');
+contentDest.addEventListener('click', () => {
+    gsap.effects.explode(contentDest, {ease: "(1, 0.75)", duration: 2})
+})
