@@ -33,6 +33,7 @@ const navFocus = document.querySelectorAll('.nav-link').forEach(item => {
         item.style.color = 'white';
         item.style.transform = 'scale(1.4)';
         item.style.transition = 'transform 1.5s'
+        event.preventDefault();
     })
 
 // #5
@@ -63,9 +64,22 @@ const hoverButtons = document.querySelectorAll('.btn').forEach(item => {
         item.style.transform = 'scale(1.4)';
     })
 })
+// gsap.to(hoverButtons, {rotation: 360, duration: 2, repeat: 1, yoyo: true});
+// var yoyo = hoverButtons.yoyo();
+// hoverButtons.yoyo(true);
 
-//const textDragged = document.getElementsByClassName('.text-content');
+// #9
+const textContent = document.querySelector('.text-content');
+textContent.addEventListener('select', () => {
+    textContent.style.backgroundColor = 'yellow';
+    event.stopPropagation();
+})
 
+// #10
+const footerFun = document.querySelector('footer p');
+footerFun.addEventListener('contextmenu', () => {
+    gsap.to(footerFun, {rotation: 360, y: -200, x: -550, duration: 2});
+}) 
 
 
 
